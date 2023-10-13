@@ -58,7 +58,16 @@ async function update(req, res) {
 
 async function deletePost(req, res) {
   try {
-    
+    const post = Post.findByIdAndDelete(req.params.postId) //test after Post model is merged
+    if (post.author.equals(req.user.profile)) {
+      await Post.findByIdAndDelete(req.params.postId)
+      const profile = await Profile.findById(req.user.profile)
+      profile.post.remove({ _id: req.params.postId})
+      await profile.save()
+      res.status(200).json(post)
+    } else {
+      throw new Error('Not Authorized')
+    }
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
