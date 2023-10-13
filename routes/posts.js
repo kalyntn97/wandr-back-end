@@ -1,5 +1,5 @@
 import { Router } from 'express'
-import * as blogsCtrl from '../controllers/blogs.js'
+import * as postsCtrl from '../controllers/posts.js'
 import { decodeUserFromToken, checkAuth } from '../middleware/auth.js'
 
 const router = Router()
@@ -9,6 +9,6 @@ const router = Router()
 
 // ========= Protected Routes ========= 
 router.use(decodeUserFromToken)
-
+router.post('/', checkAuth, postsCtrl.create)
 
 export { router }
