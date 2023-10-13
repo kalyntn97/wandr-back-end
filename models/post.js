@@ -14,8 +14,9 @@ const recommendationSchema=new Schema({
     enum:['Hiking','Star Gazing','Cycling & Mountain Biking','Whitewater Rafting','Camping'],
   },
   timing:{
-    from:{type:time,required:true},
-    to:{type:time,required:true}
+
+    from:{type:Date,required:true},
+    to:{type:Date,required:true}
   },
   rating:{
     type:Number,
