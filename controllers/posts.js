@@ -31,8 +31,21 @@ async function index(req, res) {
 async function show(req, res) {
   try {
     const post = await Post.findById(req.params.postId) // test after Post model is merged
-    // .populate(['author', 'comments.author']) <= a deep kpopulate to populate an embedded resource, AKA author of comments on the post
+    // .populate(['author', 'comments.author']) <= a deep populate to populate an embedded resource, AKA author of comments on the post
     res.status(200).json(post)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
+async function update(req, res) {
+  try {
+    const post = Post.findByIdAndUpdate(
+      // the thing we want tuo update
+      // the thing we are updating it with
+      // the thing we're updating it with is new
+    )
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
@@ -44,4 +57,5 @@ export {
   create,
   index,
   show,
+  update
 }

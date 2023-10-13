@@ -12,6 +12,7 @@ router.use(decodeUserFromToken)
 router.post('/', checkAuth, postsCtrl.create)
 router.get('/', postsCtrl.index) // no checkAuth currently due to not needing to login to view index of posts?
 router.get('/:postId', postsCtrl.show)
+router.put('/:postId', checkAuth, postsCtrl.update)
 
 
 export { router }
