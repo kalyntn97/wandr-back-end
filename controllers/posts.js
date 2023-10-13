@@ -41,11 +41,15 @@ async function show(req, res) {
 
 async function update(req, res) {
   try {
-    const post = Post.findByIdAndUpdate(
-      // the thing we want tuo update
+    const post = Post.findByIdAndUpdate( //test after Post model is merged
+      // the thing we want to update
+      req.params.postId,
       // the thing we are updating it with
+      req.body,
       // the thing we're updating it with is new
+      { new: true }
     )
+    // .populate('author') <= populate the author before we send it back
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
