@@ -10,6 +10,8 @@ async function create(req, res) {
       { $push: {posts: post}},
       { new: true }
     )
+    post.author=profile
+    res.status(201).json(post)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
@@ -73,6 +75,33 @@ async function deletePost(req, res) {
     res.status(500).json(error)
   }
 }
+async function updateComment(req,res){
+  try {
+    const post= await Post.findById(req.params.postId)
+    const comment=post.comments.id(req.params.commentId)
+    comment.updateOne()
+    await post.save()
+    res.status(200).json(comment)
+     } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+      }
+
+}
+async function deleteComment(req,res){
+  try {
+    const post=await Post.findById(req.params.postId)
+    const comment= post.comments.id(req.params.commentId)
+    comment.deleteOne()
+    await post.save()
+    res.status(200).json(comment)
+    
+  }catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+
+}
 
 
 export { 
@@ -80,5 +109,7 @@ export {
   index,
   show,
   update,
+  updateComment,
   deletePost as delete,
+  deleteComment
 }
