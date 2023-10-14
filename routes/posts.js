@@ -13,7 +13,7 @@ router.get('/:postId', postsCtrl.show) // no checkAuth currently due to not need
 router.use(decodeUserFromToken)
 router.post('/', checkAuth, postsCtrl.create)
 router.post('/:postId/comments', checkAuth, postsCtrl.createComment)
-router.post('/:postId/recommendations', checkAuth, postsCtrl.createRec)
+router.post('/:postId/recommendations', postsCtrl.createRec)
 router.put('/:postId', checkAuth, postsCtrl.update)
 router.put('/:postId/comments/:commentId', checkAuth, postsCtrl.updateComment)
 router.delete('/:postId', checkAuth, postsCtrl.delete)

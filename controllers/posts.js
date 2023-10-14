@@ -128,7 +128,7 @@ async function createRec(req, res) {
     const profile = await Profile.findById(req.user.profile)
     newRec.author = profile
   } catch (error) {
-    console.log(error)
+    console.log('❌', error)
     res.status(500).json(error)
   }
 }

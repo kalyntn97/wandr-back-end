@@ -7,11 +7,16 @@ const commentSchema=new Schema({
 },{
   timestamps:true
 })
+
 const recommendationSchema=new Schema({
-  activityName:{
-    type:String,
-    required:true,
-    enum:['Hiking','Star Gazing','Cycling & Mountain Biking','Whitewater Rafting','Camping'],
+  name: {
+    type: String, 
+    required: true
+  },
+  activity:{
+    type: String,
+    required : true,
+    enum :['Hiking','Star Gazing','Cycling & Mountain Biking','Whitewater Rafting','Camping', 'Restaurant', 'Museum', 'Nightlife', 'Shopping', 'Art and Music', 'Family-Friendly', 'Scenic Views'],
   },
   time: {
     type: String,
