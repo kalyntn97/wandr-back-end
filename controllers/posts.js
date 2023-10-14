@@ -38,13 +38,12 @@ async function show(req, res) {
 }
 async function update(req, res) {
   try {
-    const post = Post.findByIdAndUpdate(
+    const post = await Post.findByIdAndUpdate(
       req.params.postId,
       req.body,
       { new: true }
-    )
+    ).populate('author')
     res.status(200).json(post)
-    // .populate('author') <= populate the author before we send it back
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
