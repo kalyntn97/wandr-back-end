@@ -106,6 +106,21 @@ async function deleteComment(req, res) {
     res.status(500).json(error)
   }
 }
+async function createRec(req, res) {
+  try {
+    req.body.author = req.user.profile
+    const post = await Post.findById(req.params.postId)
+    post.recommendations.push(req.body)
+    await post.save()
+
+    const newRec = post.recommendations[post.recommendations.length -1]
+    const profile = await Profile.findById(req.user.profile)
+    newRec.author = profile
+  } catch (error) {
+    console.log('❌', error)
+    res.status(500).json(error)
+  }
+}
 export {
   create,
   index,
@@ -114,5 +129,6 @@ export {
   deletePost as delete,
   createComment,
   updateComment,
-  deleteComment
+  deleteComment,
+  createRec
 }
