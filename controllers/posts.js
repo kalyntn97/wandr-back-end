@@ -1,5 +1,5 @@
 import { Profile } from "../models/profile.js"
- import { Post } from "../models/post.js"
+import { Post } from "../models/post.js"
 
 async function create(req, res) {
   try {
@@ -7,7 +7,7 @@ async function create(req, res) {
     const post = await Post.create(req.body) // test after Post model is merged
     const profile = await Profile.findByIdAndUpdate(
       req.user.profile,
-      { $push: {posts: post}},
+      { $push: { posts: post } },
       { new: true }
     )
   } catch (error) {
@@ -19,8 +19,8 @@ async function create(req, res) {
 async function index(req, res) {
   try {
     const posts = await Post.find({}) // test after Post model is merged
-    .populate('author')
-    .sort({ createdAt: 'desc' })
+      .populate('author')
+      .sort({ createdAt: 'desc' })
     res.status(200).json(posts)
   } catch (error) {
     console.log(error)
@@ -62,7 +62,7 @@ async function deletePost(req, res) {
     if (post.author.equals(req.user.profile)) {
       await Post.findByIdAndDelete(req.params.postId)
       const profile = await Profile.findById(req.user.profile)
-      profile.post.remove({ _id: req.params.postId})
+      profile.post.remove({ _id: req.params.postId })
       await profile.save()
       res.status(200).json(post)
     } else {
@@ -81,7 +81,7 @@ async function createComment(req, res) {
     post.comments.push(req.body)
     await post.save()
 
-    const newComment = post.comments[post.comments.length -1]
+    const newComment = post.comments[post.comments.length - 1]
     const profile = await Profile.findById(req.user.profile)
     newComment.author = profile
     res.status(201).json(newComment)
@@ -91,11 +91,38 @@ async function createComment(req, res) {
   }
 }
 
-export { 
+async function updateComment(req, res) {
+  try {
+    const post = await Post.findById(req.params.postId)
+    const comment = post.comments.id(req.params.commentId)
+    comment.updateOne()
+    await post.save()
+    res.status(200).json(comment)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+async function deleteComment(req, res) {
+  try {
+    const post = await Post.findById(req.params.postId)
+    const comment = post.comments.id(req.params.commentId)
+    comment.deleteOne()
+    await post.save()
+    res.status(200).json(comment)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
+export {
   create,
   index,
   show,
   update,
   deletePost as delete,
-  createComment
+  createComment,
+  updateComment,
+  deleteComment
 }
