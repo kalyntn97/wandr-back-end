@@ -28,6 +28,9 @@ const recommendationSchema=new Schema({
     max:5,
     default:5,
     required:true
+  },
+  text: {
+    type: String
   }
 },{
   timestamps:true
