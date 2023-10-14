@@ -29,7 +29,7 @@ async function index(req, res) {
 async function show(req, res) {
   try {
     const post = await Post.findById(req.params.postId)
-    // .populate(['author', 'comments.author']) <= a deep populate to populate an embedded resource, AKA author of comments on the post
+    .populate(['author', 'comments.author'])
     res.status(200).json(post)
   } catch (error) {
     console.log(error)
@@ -106,6 +106,7 @@ async function deleteComment(req, res) {
     res.status(500).json(error)
   }
 }
+
 async function createRec(req, res) {
   try {
     req.body.author = req.user.profile
@@ -121,6 +122,20 @@ async function createRec(req, res) {
     res.status(500).json(error)
   }
 }
+
+async function deleteRec(req, res) {
+  try {
+    const post = await Post.findById(req.params.postId)
+    const rec = post.recommendations.id(req.params.recommendationId)
+    rec.deleteOne()
+    await post.save()
+    res.status(200).json(rec)
+  } catch (error) {
+    console.log('❌', error)
+    res.status(500).json(error)
+  }
+}
+
 export {
   create,
   index,
@@ -130,5 +145,6 @@ export {
   createComment,
   updateComment,
   deleteComment,
-  createRec
+  createRec,
+  deleteRec
 }
