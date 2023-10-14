@@ -66,7 +66,7 @@ async function deletePost(req, res) {
 }
 async function createComment(req, res) {
   try {
-    req.body.author = req.user.profile
+    
     const post = await Post.findById(req.params.postId)
     post.comments.push(req.body)
     await post.save()
@@ -96,7 +96,6 @@ async function updateComment(req, res) {
 }
 async function deleteComment(req, res) {
   try {
-    req.body.author = req.user.profile
     const post = await Post.findById(req.params.postId)
     const comment = post.comments.id(req.params.commentId)
     comment.deleteOne()
