@@ -4,12 +4,13 @@ import { Post } from "../models/post.js"
 async function create(req, res) {
   try {
     req.body.author = req.user.profile
-    const post = await Post.create(req.body) // test after Post model is merged
+    const post = await Post.create(req.body) 
     const profile = await Profile.findByIdAndUpdate(
       req.user.profile,
       { $push: { posts: post } },
       { new: true }
     )
+    res.status(200).json(post)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
@@ -18,7 +19,7 @@ async function create(req, res) {
 
 async function index(req, res) {
   try {
-    const posts = await Post.find({}) // test after Post model is merged
+    const posts = await Post.find({}) 
       .populate('author')
       .sort({ createdAt: 'desc' })
     res.status(200).json(posts)
@@ -30,7 +31,7 @@ async function index(req, res) {
 
 async function show(req, res) {
   try {
-    const post = await Post.findById(req.params.postId) // test after Post model is merged
+    const post = await Post.findById(req.params.postId) 
     // .populate(['author', 'comments.author']) <= a deep populate to populate an embedded resource, AKA author of comments on the post
     res.status(200).json(post)
   } catch (error) {
@@ -41,7 +42,7 @@ async function show(req, res) {
 
 async function update(req, res) {
   try {
-    const post = Post.findByIdAndUpdate( //test after Post model is merged
+    const post = Post.findByIdAndUpdate( 
       // the thing we want to update
       req.params.postId,
       // the thing we are updating it with
@@ -58,7 +59,7 @@ async function update(req, res) {
 
 async function deletePost(req, res) {
   try {
-    const post = Post.findByIdAndDelete(req.params.postId) //test after Post model is merged
+    const post = Post.findByIdAndDelete(req.params.postId) 
     if (post.author.equals(req.user.profile)) {
       await Post.findByIdAndDelete(req.params.postId)
       const profile = await Profile.findById(req.user.profile)
