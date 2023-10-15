@@ -137,16 +137,28 @@ async function deleteRec(req, res) {
 async function likePost(req, res) {
   try {
     const post = await Post.findById(req.params.postId)
-    const profile = await Profile.findByIdAndUpdate(
+    post.likes.push(req.user.profile)
+    await post.save()
+    res.status(200).json(req.user.profile)
+  } catch (error) {
+    console.log('❌', error)
+    res.status(500).json(error)
+  }
+}
+
+async function savePost(req, res) {
+  try {
+    const post = await Post.findById(req.params.postId)
+    await Profile.findByIdAndUpdate(
       req.user.profile, 
       { $push: { saves: post }},
       { new: true }
     )
-    post.likes.push(profile)
+    post.saves.push(req.user.profile)
     await post.save()
-    res.status(200).json(profile)
-  } catch (error) {
-    console.log('❌', error)
+    res.status(200).json(req.user.profile)
+  } catch (err) {
+    console.log(err)
     res.status(500).json(error)
   }
 }
@@ -163,4 +175,5 @@ export {
   createRec,
   deleteRec,
   likePost,
+  savePost,
 }

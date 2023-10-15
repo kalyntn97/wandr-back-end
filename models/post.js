@@ -44,7 +44,8 @@ const postSchema=new Schema({
   recommendations:[recommendationSchema],
   comments:[commentSchema],
   public:Boolean,
-  likes:[{type:Schema.Types.ObjectId,ref:'Profile'}]
+  likes:[{type:Schema.Types.ObjectId,ref:'Profile'}],
+  saves:[{type:Schema.Types.ObjectId,ref:'Profile'}]
 },{
   timestamps:true
 })
