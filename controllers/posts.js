@@ -1,6 +1,6 @@
 import { Profile } from "../models/profile.js"
 import { Post } from "../models/post.js"
-import mongoose, { Mongoose } from "mongoose"
+
 async function create(req, res) {
   try {
     req.body.author = req.user.profile
@@ -16,6 +16,7 @@ async function create(req, res) {
     res.status(500).json(error)
   }
 }
+
 async function index(req, res) {
   try {
     const posts = await Post.find({})
@@ -27,6 +28,7 @@ async function index(req, res) {
     res.status(500).json(error)
   }
 }
+
 async function show(req, res) {
   try {
     const post = await Post.findById(req.params.postId)
@@ -37,6 +39,7 @@ async function show(req, res) {
     res.status(500).json(error)
   }
 }
+
 async function update(req, res) {
   try {
     const post = await Post.findByIdAndUpdate(
@@ -81,7 +84,7 @@ async function updateComment(req, res) {
   try {
     const post = await Post.findById(req.params.postId)
     const comment = post.comments.id(req.params.commentId)
-    
+    comment.text = req.body.text
     await post.save()
     res.status(200).json(comment)
   } catch (error) {
@@ -122,7 +125,7 @@ async function deleteRec(req, res) {
   try {
     const post = await Post.findById(req.params.postId)
     const rec = post.recommendations.id(req.params.recommendationId)
-    rec.deleteOne()
+    rec.remove()
     await post.save()
     res.status(200).json(rec)
   } catch (error) {

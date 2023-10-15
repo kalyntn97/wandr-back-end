@@ -29,5 +29,20 @@ async function addPhoto(req, res) {
     res.status(500).json(err)
   }
 }
+async function show(req, res) {
+  try {
+    const profile = await Profile.findById(req.params.profileId)
+    // .populate(['author', 'comments.author'])
+    res.status(200).json(profile)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
 
-export { index, addPhoto }
+
+export { 
+  index,
+  addPhoto,
+  show
+}
