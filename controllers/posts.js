@@ -146,6 +146,23 @@ async function likePost(req, res) {
   }
 }
 
+async function savePost(req, res) {
+  try {
+    const post = await Post.findById(req.params.postId)
+    await Profile.findByIdAndUpdate(
+      req.user.profile, 
+      { $push: { saves: post }},
+      { new: true }
+    )
+    post.saves.push(req.user.profile)
+    await post.save()
+    res.status(200).json(req.user.profile)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(error)
+  }
+}
+
 export {
   create,
   index,
@@ -158,4 +175,5 @@ export {
   createRec,
   deleteRec,
   likePost,
+  savePost,
 }
