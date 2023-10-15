@@ -1,16 +1,36 @@
 import { Profile } from "../models/profile.js"
 import { Post } from "../models/post.js"
+import { v2 as cloudinary } from 'cloudinary'
 
 async function create(req, res) {
   try {
     req.body.author = req.user.profile
-    const post = await Post.create(req.body)
-    const profile = await Profile.findByIdAndUpdate(
+    const post = await Post.create(req.body.post)
+    await post.save()
+    await Profile.findByIdAndUpdate(
       req.user.profile,
       { $push: { posts: post } },
       { new: true }
     )
     res.status(200).json(post)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
+async function addPostPhoto(req, res) {
+try {
+  const post = await Post.findById(req.params.postId)
+  console.log(req.files)
+  const imageFile = req.files.photo.path
+  const image = await cloudinary.uploader.upload(
+      imageFile, 
+      { tags: `${req.params.postId}` }
+    )
+  post.mainPhoto = image.url
+  await post.save()
+  res.status(200).json(post)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
@@ -159,7 +179,19 @@ async function savePost(req, res) {
     res.status(200).json(req.user.profile)
   } catch (err) {
     console.log(err)
-    res.status(500).json(error)
+    res.status(500).json(err)
+  }
+}
+
+async function deletePostPhoto (req, res) {
+  try {
+    const post = await Post.findById(req.params.postId)
+    post.mainPhoto = ''
+    await post.save()
+    res.status(200).json(post)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err)
   }
 }
 
@@ -176,4 +208,6 @@ export {
   deleteRec,
   likePost,
   savePost,
+  addPostPhoto,
+  deletePostPhoto
 }

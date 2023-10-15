@@ -37,15 +37,16 @@ const recommendationSchema=new Schema({
 })
 
 const postSchema=new Schema({
-  title:{type:String,required:true},
-  location:{type:String,required:true},
-  content:{type:String,required:true},
+  title:{type:String},
+  location:{type:String},
+  content:{type:String},
   author:{type:Schema.Types.ObjectId,ref:'Profile'},
   recommendations:[recommendationSchema],
   comments:[commentSchema],
   public:Boolean,
   likes:[{type:Schema.Types.ObjectId,ref:'Profile'}],
-  saves:[{type:Schema.Types.ObjectId,ref:'Profile'}]
+  saves:[{type:Schema.Types.ObjectId,ref:'Profile'}],
+  mainPhoto: String,
 },{
   timestamps:true
 })

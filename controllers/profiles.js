@@ -29,6 +29,7 @@ async function addPhoto(req, res) {
     res.status(500).json(err)
   }
 }
+
 async function show(req, res) {
   try {
     const profile = await Profile.findById(req.params.profileId)
