@@ -1,5 +1,6 @@
 import { Profile } from "../models/profile.js"
 import { Post } from "../models/post.js"
+import mongoose, { Mongoose } from "mongoose"
 async function create(req, res) {
   try {
     req.body.author = req.user.profile
@@ -78,13 +79,10 @@ async function createComment(req, res) {
 }
 async function updateComment(req, res) {
   try {
-    req.body.author = req.user.profile
-    const test = await Post.updateOne(
-      { _id: req.params.postId, "comments._id": req.params.commentId },
-      { $set: { "comments.$.text": req.body.text } }
-    )
     const post = await Post.findById(req.params.postId)
     const comment = post.comments.id(req.params.commentId)
+    
+    await post.save()
     res.status(200).json(comment)
   } catch (error) {
     console.log(error)
