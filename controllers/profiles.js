@@ -40,9 +40,21 @@ async function show(req, res) {
   }
 }
 
+async function savePost(req, res) {
+  try {
+    const profile = await Profile.findByIdAndUpdate(
+      req.user.profile, 
+      { $push: { saves: post }},
+      { new: true }
+    )
+  } catch (err) {
+    console.log(err)
+  }
+}
 
 export { 
   index,
   addPhoto,
-  show
+  show,
+  savePost,
 }
