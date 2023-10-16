@@ -1,3 +1,4 @@
+import { Mongoose } from 'mongoose'
 import { Profile } from '../models/profile.js'
 import { v2 as cloudinary } from 'cloudinary'
 
@@ -34,6 +35,10 @@ async function show(req, res) {
   try {
     const profile = await Profile.findById(req.params.profileId)
     // .populate(['author', 'comments.author'])
+    .populate([
+      {path: 'followers'},
+      {path: 'following'}
+    ])
     res.status(200).json(profile)
   } catch (error) {
     console.log(error)
@@ -41,8 +46,23 @@ async function show(req, res) {
   }
 }
 
+async function addFollow(req, res) {
+  try {
+    const userProfile = await Profile.findById(req.user.profile)
+    const otherProfile = await Profile.findById(req.params.profileId)
+    userProfile.following.push(otherProfile._id)
+    otherProfile.followers.push(userProfile._id)
+    Promise.all([userProfile.save(), otherProfile.save()])
+    res.status(200).json(otherProfile)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err)
+  }
+}
+
 export { 
   index,
   addPhoto,
   show,
+  addFollow,
 }
