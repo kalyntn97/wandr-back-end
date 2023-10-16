@@ -153,6 +153,29 @@ async function deleteRec(req, res) {
   }
 }
 
+async function updateRec(req, res) {
+  try {
+    const post = await Post.findById(req.params.postId);
+    if (!post) {
+      return res.status(404).json({ error: 'Post not found' });
+    }
+    const rec = post.recommendations.id(req.params.recommendationId);
+    if (!rec) {
+      return res.status(404).json({ error: 'Recommendation not found' });
+    }
+    rec.name = req.body.name
+    rec.activity = req.body.activity
+    rec.time = req.body.time
+    rec.rating = req.body.rating
+    rec.text = req.body.text
+    await post.save();
+    res.status(200).json(rec);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json(error);
+  }
+}
+
 async function likePost(req, res) {
   try {
     const post = await Post.findById(req.params.postId)
@@ -205,6 +228,7 @@ export {
   deleteComment,
   createRec,
   deleteRec,
+  updateRec,
   likePost,
   savePost,
   addPostPhoto,
