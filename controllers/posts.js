@@ -164,6 +164,7 @@ async function updateRec(req, res) {
       return res.status(404).json({ error: 'Recommendation not found' });
     }
     rec.name = req.body.name
+    rec.activity = req.body.activity
     rec.time = req.body.time
     rec.rating = req.body.rating
     rec.text = req.body.text
