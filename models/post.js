@@ -43,10 +43,11 @@ const postSchema=new Schema({
   author:{type:Schema.Types.ObjectId,ref:'Profile'},
   recommendations:[recommendationSchema],
   comments:[commentSchema],
-  public:Boolean,
+  public:{type:Boolean},
   likes:[{type:Schema.Types.ObjectId,ref:'Profile'}],
   saves:[{type:Schema.Types.ObjectId,ref:'Profile'}],
-  mainPhoto: String,
+  mainPhoto:{type:String},
+  morePhotos:[{type: String}],
 },{
   timestamps:true
 })
