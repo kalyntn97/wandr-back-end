@@ -12,6 +12,26 @@ async function index(req, res) {
   }
 }
 
+async function indexFollowers(req, res) {
+  try {
+    const profile = await Profile.findById(req.params.profileId)
+    const followers = await Profile.find({ _id: { $in: profile.followers } })
+    res.status(200).json(followers)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+async function indexFollowing(req, res) {
+  try {
+    const profile = await Profile.findById(req.params.profileId)
+    const following = await Profile.find({ _id: { $in: profile.following } })
+    res.status(200).json(following)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 async function addPhoto(req, res) {
   try {
     const imageFile = req.files.photo.path
@@ -65,4 +85,6 @@ export {
   addPhoto,
   show,
   addFollow,
+  indexFollowers,
+  indexFollowing
 }
