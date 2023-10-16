@@ -133,6 +133,7 @@ async function createRec(req, res) {
     const newRec = post.recommendations[post.recommendations.length -1]
     const profile = await Profile.findById(req.user.profile)
     newRec.author = profile
+    res.status(201).json(newRec)
   } catch (error) {
     console.log('❌', error)
     res.status(500).json(error)
