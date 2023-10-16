@@ -6,6 +6,8 @@ const router = Router()
 
 /*---------- Public Routes ----------*/
 router.get('/:profileId', profilesCtrl.show)
+router.get('/:profileId/followers', profilesCtrl.indexFollowers)
+router.get('/:profileId/following', profilesCtrl.indexFollowing)
 
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
