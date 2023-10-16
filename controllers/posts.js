@@ -5,8 +5,7 @@ import { v2 as cloudinary } from 'cloudinary'
 async function create(req, res) {
   try {
     req.body.author = req.user.profile
-    const post = await Post.create(req.body.post)
-    await post.save()
+    const post = await Post.create(req.body)
     await Profile.findByIdAndUpdate(
       req.user.profile,
       { $push: { posts: post } },
@@ -22,7 +21,6 @@ async function create(req, res) {
 async function addPostPhoto(req, res) {
 try {
   const post = await Post.findById(req.params.postId)
-  console.log(req.files)
   const imageFile = req.files.photo.path
   const image = await cloudinary.uploader.upload(
       imageFile, 
