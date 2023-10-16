@@ -11,6 +11,19 @@ async function index(req, res) {
     res.status(500).json(err)
   }
 }
+async function updateProfile(req,res){
+  try {
+    const profile = await Profile.findByIdAndUpdate(
+      req.params.profileId,
+      req.body,
+      { new: true }
+    ).populate('author')
+    res.status(200).json(post)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
 
 async function addPhoto(req, res) {
   try {
@@ -65,4 +78,5 @@ export {
   addPhoto,
   show,
   addFollow,
+  updateProfile as update
 }
