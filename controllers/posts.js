@@ -157,21 +157,12 @@ async function updateRec(req, res) {
   try {
     const post = await Post.findById(req.params.postId)
     const rec = post.recommendations.id(req.params.recId)
-    if (req.body.name) {
-      rec.name = rec.body.name
-    }
-    if (req.body.activity) {
-      rec.activity = rec.body.activity
-    }
-    if (req.body.time) {
-      rec.time = rec.body.time
-    }
-    if (req.body.rating) {
-      rec.rating = rec.body.rating
-    }
-    if (req.body.text) {
-      rec.text = rec.body.text
-    }
+    
+    rec.name = req.body.name
+    rec.time = req.body.time
+    rec.rating = req.body.rating
+    rec.text = req.body.text
+
     await post.save()
     res.status(200).json(rec)
   } catch (error) {
