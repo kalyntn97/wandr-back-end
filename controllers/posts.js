@@ -145,7 +145,7 @@ async function deleteRec(req, res) {
   try {
     const post = await Post.findById(req.params.postId)
     const rec = post.recommendations.id(req.params.recommendationId)
-    rec.remove()
+    rec.deleteOne()
     await post.save()
     res.status(200).json(rec)
   } catch (error) {
