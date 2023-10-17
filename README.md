@@ -8,10 +8,10 @@ The planning materials are available on the Trello board linked [here](https://t
 ## Front-end Github :
 # [Front-end](https://github.com/kalyntn97/wandr-front-end)
 ## Contributors :
-- [Brooklin Lee](https://github.com/brooklinlee) -Backend Developer
-- [Tran Nguyen](https://github.com/kalyntn97) - Frontend Developer
-- [Maria Zhuravleva](https://github.com/maria-zhuravleva)- Design
-- [Muguntha Duraraj](https://github.com/Muguntha96)- Database Manager
+- [Brooklin Lee](https://github.com/brooklinlee) -Backend Developer and Scrum Manager
+- [Tran Nguyen](https://github.com/kalyntn97) - Frontend Developer and Git Commander
+- [Maria Zhuravleva](https://github.com/maria-zhuravleva)-Lead Design
+- [Muguntha Duraraj](https://github.com/Muguntha96)- Database and Models Manager
 
 ## Attrbutions :
 ![MDN](https://img.shields.io/badge/MDN%20Web%20Docs-000000.svg?style=for-the-badge&logo=MDN-Web-Docs&logoColor=white)
