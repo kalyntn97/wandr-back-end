@@ -30,16 +30,18 @@ async function updateProfile(req,res){
     res.status(500).json(error)
   }
 }
-async function deleteProfile(req,res){
-try {
-  const user = await User.findById(req.params.profileId)
-  const profile=await Profile.findByIdAndDelete(user.profile)
- const deleteUser=await User.findByIdAndDelete(req.params.profileId)
- res.status(200).json(user)
-} catch (error) {
-  console.log(error)
-  res.status(500).json(error)
-}
+async function deleteProfile(req, res) {
+  try {
+    const profile = await Profile.findByIdAndDelete(req.params.profileId)
+    const user = await User.findOne({ profile: req.params.profileId })
+    if (user) {
+      const deleteUser = await User.deleteOne({ _id: user._id })
+    }
+    res.status(200).json(user)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
 }
 
 async function indexFollowers(req, res) {
@@ -104,8 +106,22 @@ async function addFollow(req, res) {
     userProfile.following.push(otherProfile._id)
     otherProfile.followers.push(userProfile._id)
     Promise.all([userProfile.save(), otherProfile.save()])
-    res.status(200).json(otherProfile)
+    res.status(200).json(otherProfile.followers)
   } catch (err) {
+    console.log(err)
+    res.status(500).json(err)
+  }
+}
+
+async function unFollow(req, res) {
+  try {
+    const userProfile = await Profile.findById(req.user.profile)
+    const otherProfile = await Profile.findById(req.params.profileId)
+    userProfile.following.remove({_id: otherProfile._id})
+    otherProfile.followers.remove({_id: userProfile._id})
+    Promise.all([userProfile.save(), otherProfile.save()])
+    res.status(200).json(otherProfile.followers)
+  } catch (error) {
     console.log(err)
     res.status(500).json(err)
   }
@@ -135,6 +151,7 @@ export {
   addPhoto,
   show,
   addFollow,
+  unFollow,
   updateProfile as update,
   indexFollowers,
   indexFollowing,
