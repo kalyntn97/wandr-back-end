@@ -28,7 +28,7 @@ try {
     )
   post.mainPhoto = image.url
   await post.save()
-  res.status(200).json(post.mainPhoto)
+  res.status(200).json(post)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
@@ -43,7 +43,7 @@ async function addMorePhotos(req, res) {
         imageFile, 
         { tags: `${req.params.postId}` }
       )
-    post.morePhotos.push(image.url)
+    post.morePhotos.push(image)
     await post.save()
     res.status(200).json(post)
   } catch (error) {
@@ -227,12 +227,28 @@ async function deleteMainPhoto (req, res) {
     const post = await Post.findById(req.params.postId)
     post.mainPhoto = ''
     await post.save()
-    res.status(200).json(post.mainPhoto)
+    res.status(200).json(post)
   } catch (err) {
     console.log(err)
     res.status(500).json(err)
   }
 }
+
+// async function deleteMorePhotos (req, res) {
+//   try {
+//     const post = await Post.findById(req.params.postId)
+//     console.log(postId.toString())
+//     const idx = post.morePhotos.findIndex(str => str.includes(photoId.toString()))
+
+//     console.log(idx)
+//     photo.deleteOne()
+//     await post.save()
+//     res.status(200).json(post)
+//   } catch (err) {
+//     console.log(err)
+//     res.status(500).json(err)
+//   }
+// }
 
 export {
   create,
@@ -251,4 +267,5 @@ export {
   addMainPhoto,
   deleteMainPhoto,
   addMorePhotos,
+  // deleteMorePhotos,
 }
