@@ -2,6 +2,7 @@ import { Mongoose } from 'mongoose'
 import { Profile } from '../models/profile.js'
 import { User } from '../models/user.js'
 import { v2 as cloudinary } from 'cloudinary'
+import { Post } from '../models/post.js'
 
 async function index(req, res) {
   try {
@@ -27,6 +28,26 @@ async function updateProfile(req,res){
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
+  }
+}
+
+async function indexFollowers(req, res) {
+  try {
+    const profile = await Profile.findById(req.params.profileId)
+    const followers = await Profile.find({ _id: { $in: profile.followers } })
+    res.status(200).json(followers)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+async function indexFollowing(req, res) {
+  try {
+    const profile = await Profile.findById(req.params.profileId)
+    const following = await Profile.find({ _id: { $in: profile.following } })
+    res.status(200).json(following)
+  } catch (error) {
+    console.log(error)
   }
 }
 
@@ -79,10 +100,32 @@ async function addFollow(req, res) {
   }
 }
 
+async function explorePage(req, res) {
+  try {
+    const profile = await Profile.findById(req.params.profileId)
+    const following = await Profile.find({ _id: { $in: profile.following } })
+    const recentPosts = []
+    for ( const followedUser of following) {
+      const userPosts =  await Post.find({ author: followedUser._id })
+        .sort({ createdAt: -1})
+        .limit(1)
+      if (userPosts.length > 0) {
+        recentPosts.push(userPosts[0])
+      }
+    } 
+    res.status(200).json(recentPosts)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export { 
   index,
   addPhoto,
   show,
   addFollow,
-  updateProfile as update
+  updateProfile as update,
+  indexFollowers,
+  indexFollowing,
+  explorePage
 }
