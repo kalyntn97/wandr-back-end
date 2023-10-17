@@ -12,9 +12,10 @@ router.get('/:profileId/following', profilesCtrl.indexFollowing)
 /*---------- Protected Routes ----------*/
 router.use(decodeUserFromToken)
 router.get('/', checkAuth, profilesCtrl.index)
+router.get('/:profileId/following/posts', checkAuth, profilesCtrl.explorePage)
 router.put('/:id/add-photo', checkAuth, profilesCtrl.addPhoto)
 router.put('/:profileId', checkAuth, profilesCtrl.update)
 router.patch('/:profileId/', checkAuth, profilesCtrl.addFollow)
-router.get('/:profileId/following/posts', checkAuth, profilesCtrl.explorePage)
+router.delete('/:profileId', checkAuth, profilesCtrl.delete)
 
 export { router }

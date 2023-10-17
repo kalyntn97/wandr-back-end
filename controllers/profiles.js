@@ -15,7 +15,7 @@ async function index(req, res) {
 }
 async function updateProfile(req,res){
   try {
-    const user = await User.findByIdAndUpdate(
+      const user = await User.findByIdAndUpdate(
       req.params.profileId,
       req.body,
       { new: true }
@@ -29,6 +29,17 @@ async function updateProfile(req,res){
     console.log(error)
     res.status(500).json(error)
   }
+}
+async function deleteProfile(req,res){
+try {
+  const user = await User.findById(req.params.profileId)
+  const profile=await Profile.findByIdAndDelete(user.profile)
+ const deleteUser=await User.findByIdAndDelete(req.params.profileId)
+ res.status(200).json(user)
+} catch (error) {
+  console.log(error)
+  res.status(500).json(error)
+}
 }
 
 async function indexFollowers(req, res) {
@@ -127,5 +138,6 @@ export {
   updateProfile as update,
   indexFollowers,
   indexFollowing,
-  explorePage
+  explorePage,
+  deleteProfile as delete
 }
