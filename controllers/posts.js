@@ -44,10 +44,10 @@ async function addMorePhotos(req, res) {
         { tags: `${req.params.postId}` }
       )
     req.body.url = image.url
-    const photo = req.body
+    post.morePhotos.push(req.body)
     await post.save()
-    console.log(post)
-    res.status(200).json(photo)
+    const newPhoto = post.morePhotos[post.morePhotos.length - 1]
+    res.status(200).json(newPhoto)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
@@ -229,28 +229,26 @@ async function deleteMainPhoto (req, res) {
     const post = await Post.findById(req.params.postId)
     post.mainPhoto = ''
     await post.save()
-    res.status(200).json(post)
+    res.status(200).json(post.mainPhoto)
   } catch (err) {
     console.log(err)
     res.status(500).json(err)
   }
 }
 
-// async function deleteMorePhotos (req, res) {
-//   try {
-//     const post = await Post.findById(req.params.postId)
-//     console.log(postId.toString())
-//     const idx = post.morePhotos.findIndex(str => str.includes(photoId.toString()))
-
-//     console.log(idx)
-//     photo.deleteOne()
-//     await post.save()
-//     res.status(200).json(post)
-//   } catch (err) {
-//     console.log(err)
-//     res.status(500).json(err)
-//   }
-// }
+async function deleteMorePhotos (req, res) {
+  try {
+    const post = await Post.findById(req.params.postId)
+    const photo = post.morePhotos.id(req.params.photoId)
+    console.log(photo)
+    photo.deleteOne()
+    await post.save()
+    res.status(200).json(photo)
+  } catch (err) {
+    console.log(err)
+    res.status(500).json(err)
+  }
+}
 
 export {
   create,
@@ -269,5 +267,5 @@ export {
   addMainPhoto,
   deleteMainPhoto,
   addMorePhotos,
-  // deleteMorePhotos,
+  deleteMorePhotos,
 }
