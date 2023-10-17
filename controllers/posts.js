@@ -28,7 +28,7 @@ try {
     )
   post.mainPhoto = image.url
   await post.save()
-  res.status(200).json(post)
+  res.status(200).json(post.mainPhoto)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
@@ -43,14 +43,16 @@ async function addMorePhotos(req, res) {
         imageFile, 
         { tags: `${req.params.postId}` }
       )
-    post.morePhotos.push(image.url)
+    req.body.url = image.url
+    const photo = req.body
     await post.save()
-    res.status(200).json(post)
+    console.log(post)
+    res.status(200).json(photo)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
   }
-}
+}2
 
 async function index(req, res) {
   try {

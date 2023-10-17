@@ -36,6 +36,10 @@ const recommendationSchema=new Schema({
   timestamps:true
 })
 
+const photoSchema = new Schema({
+  url: String
+})
+
 const postSchema=new Schema({
   title:{type:String},
   location:{type:String},
@@ -47,7 +51,7 @@ const postSchema=new Schema({
   likes:[{type:Schema.Types.ObjectId,ref:'Profile'}],
   saves:[{type:Schema.Types.ObjectId,ref:'Profile'}],
   mainPhoto:{type:String},
-  morePhotos:[{type: String}],
+  morePhotos:[photoSchema],
 },{
   timestamps:true
 })
