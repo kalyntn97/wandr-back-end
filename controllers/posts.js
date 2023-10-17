@@ -43,7 +43,7 @@ async function addMorePhotos(req, res) {
         imageFile, 
         { tags: `${req.params.postId}` }
       )
-    post.morePhotos.push(image)
+    post.morePhotos.push(image.url)
     await post.save()
     res.status(200).json(post)
   } catch (error) {
