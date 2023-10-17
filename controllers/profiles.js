@@ -100,6 +100,20 @@ async function addFollow(req, res) {
   }
 }
 
+async function unFollow(req, res) {
+  try {
+    const userProfile = await Profile.findById(req.user.profile)
+    const otherProfile = await Profile.findById(req.params.profileId)
+    userProfile.following.remove({_id: otherProfile._id})
+    otherProfile.followers.remove({_id: userProfile._id})
+    Promise.all([userProfile.save(), otherProfile.save()])
+    res.status(200).json(otherProfile)
+  } catch (error) {
+    console.log(err)
+    res.status(500).json(err)
+  }
+}
+
 async function explorePage(req, res) {
   try {
     const profile = await Profile.findById(req.params.profileId)
@@ -124,6 +138,7 @@ export {
   addPhoto,
   show,
   addFollow,
+  unFollow,
   updateProfile as update,
   indexFollowers,
   indexFollowing,

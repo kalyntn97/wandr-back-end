@@ -14,7 +14,8 @@ router.use(decodeUserFromToken)
 router.get('/', checkAuth, profilesCtrl.index)
 router.put('/:id/add-photo', checkAuth, profilesCtrl.addPhoto)
 router.put('/:profileId', checkAuth, profilesCtrl.update)
-router.patch('/:profileId/', checkAuth, profilesCtrl.addFollow)
+router.patch('/:profileId/follow', checkAuth, profilesCtrl.addFollow)
+router.patch('/:profileId/unfollow', checkAuth, profilesCtrl.unFollow)
 router.get('/:profileId/following/posts', checkAuth, profilesCtrl.explorePage)
 
 export { router }

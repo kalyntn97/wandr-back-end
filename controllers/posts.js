@@ -240,7 +240,6 @@ async function deleteMorePhotos (req, res) {
   try {
     const post = await Post.findById(req.params.postId)
     const photo = post.morePhotos.id(req.params.photoId)
-    console.log(photo)
     photo.deleteOne()
     await post.save()
     res.status(200).json(photo)
