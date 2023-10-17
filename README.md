@@ -5,6 +5,8 @@ Wandr is a web-based application with a mission to inspire individuals to step o
 The planning materials are available on the Trello board linked [here](https://trello.com/b/CDqA4iHA/wandr), which contains the project's user stories, ERD, and wireframes.
 ## Installation : 
 # [Wandr](http://localhost:5175/about)
+## Front-end Github :
+# [Front-end](https://github.com/kalyntn97/wandr-back-end)
 ## Contributors :
 - [Brooklin Lee](https://github.com/brooklinlee) -Backend Developer
 - [Tran Nguyen](https://github.com/kalyntn97) - Frontend Developer
