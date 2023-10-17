@@ -13,6 +13,7 @@ router.get('/:profileId/following', profilesCtrl.indexFollowing)
 router.use(decodeUserFromToken)
 router.get('/', checkAuth, profilesCtrl.index)
 router.put('/:id/add-photo', checkAuth, profilesCtrl.addPhoto)
+router.put('/:profileId', checkAuth, profilesCtrl.update)
 router.patch('/:profileId/', checkAuth, profilesCtrl.addFollow)
 router.get('/:profileId/following/posts', checkAuth, profilesCtrl.explorePage)
 
