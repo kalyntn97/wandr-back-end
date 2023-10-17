@@ -6,7 +6,7 @@ The planning materials are available on the Trello board linked [here](https://t
 ## Installation : 
 # [Wandr](http://localhost:5175/about)
 ## Front-end Github :
-# [Front-end](https://github.com/kalyntn97/wandr-back-end)
+# [Front-end](https://github.com/kalyntn97/wandr-front-end)
 ## Contributors :
 - [Brooklin Lee](https://github.com/brooklinlee) -Backend Developer
 - [Tran Nguyen](https://github.com/kalyntn97) - Frontend Developer
