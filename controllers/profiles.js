@@ -1,5 +1,6 @@
 import { Mongoose } from 'mongoose'
 import { Profile } from '../models/profile.js'
+import { User } from '../models/user.js'
 import { v2 as cloudinary } from 'cloudinary'
 import { Post } from '../models/post.js'
 
@@ -10,6 +11,23 @@ async function index(req, res) {
   } catch (err) {
     console.log(err)
     res.status(500).json(err)
+  }
+}
+async function updateProfile(req,res){
+  try {
+    const user = await User.findByIdAndUpdate(
+      req.params.profileId,
+      req.body,
+      { new: true }
+    )
+    await Profile.findByIdAndUpdate(
+      user.profile,
+      {'name' : user.name }
+    )
+    res.status(200).json(user)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
   }
 }
 
@@ -60,6 +78,7 @@ async function show(req, res) {
       {path: 'followers'},
       {path: 'following'}
     ])
+    console.log(profile)
     res.status(200).json(profile)
   } catch (error) {
     console.log(error)
@@ -105,6 +124,7 @@ export {
   addPhoto,
   show,
   addFollow,
+  updateProfile as update,
   indexFollowers,
   indexFollowing,
   explorePage
