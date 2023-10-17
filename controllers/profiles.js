@@ -80,11 +80,20 @@ async function addFollow(req, res) {
   }
 }
 
+async function explorePage(req, res) {
+  try {
+    
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export { 
   index,
   addPhoto,
   show,
   addFollow,
   indexFollowers,
-  indexFollowing
+  indexFollowing,
+  explorePage
 }
