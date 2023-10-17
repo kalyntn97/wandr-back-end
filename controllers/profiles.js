@@ -1,6 +1,7 @@
 import { Mongoose } from 'mongoose'
 import { Profile } from '../models/profile.js'
 import { v2 as cloudinary } from 'cloudinary'
+import { Post } from '../models/post.js'
 
 async function index(req, res) {
   try {
@@ -80,11 +81,31 @@ async function addFollow(req, res) {
   }
 }
 
+async function explorePage(req, res) {
+  try {
+    const profile = await Profile.findById(req.params.profileId)
+    const following = await Profile.find({ _id: { $in: profile.following } })
+    const recentPosts = []
+    for ( const followedUser of following) {
+      const userPosts =  await Post.find({ author: followedUser._id })
+        .sort({ createdAt: -1})
+        .limit(1)
+      if (userPosts.length > 0) {
+        recentPosts.push(userPosts[0])
+      }
+    } 
+    res.status(200).json(recentPosts)
+  } catch (error) {
+    console.log(error)
+  }
+}
+
 export { 
   index,
   addPhoto,
   show,
   addFollow,
   indexFollowers,
-  indexFollowing
+  indexFollowing,
+  explorePage
 }
