@@ -5,6 +5,7 @@ const Schema = mongoose.Schema
 const profileSchema = new Schema({
   name: String,
   photo: String,
+  bio: String,
   posts:[{type:Schema.Types.ObjectId,ref:'Post'}],
   saves:[{type:Schema.Types.ObjectId,ref:'Post'}],
   followers:[{type:Schema.Types.ObjectId,ref:'Profile'}],
