@@ -190,6 +190,18 @@ async function likePost(req, res) {
   }
 }
 
+async function unlikePost(req, res) {
+  try {
+    const post = await Post.findById(req.params.postId)
+    post.likes.remove({_id: req.user.profile})
+    await post.save()
+    res.status(200).json(req.user.profile)
+  } catch (error) {
+    console.log(err)
+    res.status(500).json(err)
+  }
+}
+
 async function savePost(req, res) {
   try {
     const post = await Post.findById(req.params.postId)
@@ -204,6 +216,20 @@ async function savePost(req, res) {
   } catch (err) {
     console.log(err)
     res.status(500).json(err)
+  }
+}
+
+async function unsavePost(req, res) {
+  try {
+    const post = await Post.findById(req.params.postId)
+    const profile = await Profile.findById(req.user.profile)
+    post.saves.remove({_id: req.user.profile})
+    profile.saves.remove({_id: post._id})
+    Promise.all([profile.save(), post.save()])
+    res.status(200).json(post.saves)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
   }
 }
 
@@ -236,4 +262,6 @@ export {
   savePost,
   addMorePhotos,
   deleteMorePhotos,
+  unlikePost,
+  unsavePost,
 }
