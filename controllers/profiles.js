@@ -1,4 +1,4 @@
-import { Mongoose } from 'mongoose'
+import { Mongoose, trusted } from 'mongoose'
 import { Profile } from '../models/profile.js'
 import { User } from '../models/user.js'
 import { v2 as cloudinary } from 'cloudinary'
@@ -15,15 +15,23 @@ async function index(req, res) {
 }
 async function updateProfile(req,res){
   try {
+    req.user.profile = req.params.profileId
     const user = await User.findByIdAndUpdate(
-      req.params.profileId,
-      req.body,
+      req.user._id,
+      {
+        'name': req.body.name,
+        'email': req.body.email,
+      },
       { new: true }
     )
-    await Profile.findByIdAndUpdate(
-      user.profile,
-      {'name' : user.name }
+    const profile = await Profile.findByIdAndUpdate(
+      req.params.profileId,
+      {'name' : req.body.name,
+        'bio': req.body.bio
+      },
+      {new: true}
     )
+    Promise.all([user.save(), profile.save()])
     res.status(200).json(user)
   } catch (error) {
     console.log(error)
@@ -74,11 +82,10 @@ async function show(req, res) {
   try {
     const profile = await Profile.findById(req.params.profileId)
     // .populate(['author', 'comments.author'])
-    .populate([
-      {path: 'followers'},
-      {path: 'following'}
-    ])
-    console.log(profile)
+    // .populate([
+    //   {path: 'followers'},
+    //   {path: 'following'}
+    // ])
     res.status(200).json(profile)
   } catch (error) {
     console.log(error)
