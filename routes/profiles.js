@@ -19,5 +19,6 @@ router.patch('/:profileId/follow', checkAuth, profilesCtrl.addFollow)
 router.patch('/:profileId/unfollow', checkAuth, profilesCtrl.unFollow)
 router.get('/:profileId/following/posts', checkAuth, profilesCtrl.explorePage)
 router.delete('/:profileId',checkAuth,profilesCtrl.delete)
+router.delete('/:profileId/saves/:postId', checkAuth, profilesCtrl.deleteSavedPosts)
 
 export { router }
