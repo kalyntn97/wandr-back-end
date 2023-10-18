@@ -151,6 +151,21 @@ async function explorePage(req, res) {
     res.status(200).json(recentPosts)
   } catch (error) {
     console.log(error)
+    res.status(500).json(err)
+  }
+}
+
+async function deleteSavedPosts(req, res) {
+  try {
+    const profile = await Profile.findById(req.params.profileId)
+    const post = await Post.findById(req.params.postId)
+    profile.saves.remove({_id: post._id})
+    post.saves.remove({_id: profile._id})
+    Promise.all([profile.save(), post.save()])
+    res.status(200).json(profile.saves)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
   }
 }
 
@@ -164,5 +179,6 @@ export {
   indexFollowers,
   indexFollowing,
   explorePage,
-  deleteProfile as delete
+  deleteProfile as delete,
+  deleteSavedPosts,
 }
