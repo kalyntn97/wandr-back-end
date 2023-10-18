@@ -157,7 +157,7 @@ async function explorePage(req, res) {
 
 async function deleteSavedPosts(req, res) {
   try {
-    const profile = await Profile.findById(req.params.profileId)
+    const profile = await Profile.findById(req.user.profile)
     const post = await Post.findById(req.params.postId)
     profile.saves.remove({_id: post._id})
     post.saves.remove({_id: profile._id})

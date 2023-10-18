@@ -220,7 +220,17 @@ async function savePost(req, res) {
 }
 
 async function unsavePost(req, res) {
-
+  try {
+    const post = await Post.findById(req.params.postId)
+    const profile = await Profile.findById(req.user.profile)
+    post.saves.remove({_id: req.user.profile})
+    profile.saves.remove({_id: post._id})
+    Promise.all([profile.save(), post.save()])
+    res.status(200).json(post.saves)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
 }
 
 async function deleteMorePhotos (req, res) {
