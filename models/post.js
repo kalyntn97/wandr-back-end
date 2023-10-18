@@ -50,7 +50,6 @@ const postSchema=new Schema({
   public:{type:Boolean},
   likes:[{type:Schema.Types.ObjectId,ref:'Profile'}],
   saves:[{type:Schema.Types.ObjectId,ref:'Profile'}],
-  mainPhoto:{type:String},
   morePhotos:[photoSchema],
 },{
   timestamps:true

@@ -18,23 +18,6 @@ async function create(req, res) {
   }
 }
 
-async function addMainPhoto(req, res) {
-try {
-  const post = await Post.findById(req.params.postId)
-  const imageFile = req.files.photo.path
-  const image = await cloudinary.uploader.upload(
-      imageFile, 
-      { tags: `${req.params.postId}` }
-    )
-  post.mainPhoto = image.url
-  await post.save()
-  res.status(200).json(post.mainPhoto)
-  } catch (error) {
-    console.log(error)
-    res.status(500).json(error)
-  }
-}
-
 async function addMorePhotos(req, res) {
   try {
     const post = await Post.findById(req.params.postId)
@@ -224,18 +207,6 @@ async function savePost(req, res) {
   }
 }
 
-async function deleteMainPhoto (req, res) {
-  try {
-    const post = await Post.findById(req.params.postId)
-    post.mainPhoto = ''
-    await post.save()
-    res.status(200).json(post.mainPhoto)
-  } catch (err) {
-    console.log(err)
-    res.status(500).json(err)
-  }
-}
-
 async function deleteMorePhotos (req, res) {
   try {
     const post = await Post.findById(req.params.postId)
@@ -263,8 +234,6 @@ export {
   updateRec,
   likePost,
   savePost,
-  addMainPhoto,
-  deleteMainPhoto,
   addMorePhotos,
   deleteMorePhotos,
 }
