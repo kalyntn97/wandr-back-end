@@ -190,6 +190,18 @@ async function likePost(req, res) {
   }
 }
 
+async function unlikePost(req, res) {
+  try {
+    const post = await Post.findById(req.params.postId)
+    post.likes.remove({_id: req.user.profile})
+    await post.save()
+    res.status(200).json(req.user.profile)
+  } catch (error) {
+    console.log(err)
+    res.status(500).json(err)
+  }
+}
+
 async function savePost(req, res) {
   try {
     const post = await Post.findById(req.params.postId)
@@ -205,6 +217,10 @@ async function savePost(req, res) {
     console.log(err)
     res.status(500).json(err)
   }
+}
+
+async function unsavePost(req, res) {
+
 }
 
 async function deleteMorePhotos (req, res) {
@@ -236,4 +252,6 @@ export {
   savePost,
   addMorePhotos,
   deleteMorePhotos,
+  unlikePost,
+  unsavePost,
 }
