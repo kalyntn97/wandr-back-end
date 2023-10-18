@@ -1,4 +1,3 @@
-import { Mongoose, trusted } from 'mongoose'
 import { Profile } from '../models/profile.js'
 import { User } from '../models/user.js'
 import { v2 as cloudinary } from 'cloudinary'
