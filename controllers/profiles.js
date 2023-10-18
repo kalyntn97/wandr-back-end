@@ -12,6 +12,7 @@ async function index(req, res) {
     res.status(500).json(err)
   }
 }
+
 async function updateProfile(req,res){
   try {
     req.user.profile = req.params.profileId
@@ -31,6 +32,20 @@ async function updateProfile(req,res){
       {new: true}
     )
     Promise.all([user.save(), profile.save()])
+    res.status(200).json(user)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json(error)
+  }
+}
+
+async function deleteProfile(req, res) {
+  try {
+    const profile = await Profile.findByIdAndDelete(req.params.profileId)
+    const user = await User.findOne({ profile: req.params.profileId })
+    if (user) {
+      const deleteUser = await User.deleteOne({ _id: user._id })
+    }
     res.status(200).json(user)
   } catch (error) {
     console.log(error)
@@ -148,5 +163,6 @@ export {
   updateProfile as update,
   indexFollowers,
   indexFollowing,
-  explorePage
+  explorePage,
+  deleteProfile as delete
 }
