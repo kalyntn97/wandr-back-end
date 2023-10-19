@@ -95,11 +95,6 @@ async function addPhoto(req, res) {
 async function show(req, res) {
   try {
     const profile = await Profile.findById(req.params.profileId)
-    // .populate(['author', 'comments.author'])
-    // .populate([
-    //   {path: 'followers'},
-    //   {path: 'following'}
-    // ])
     res.status(200).json(profile)
   } catch (error) {
     console.log(error)

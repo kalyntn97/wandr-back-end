@@ -23,9 +23,9 @@ async function addMorePhotos(req, res) {
     const post = await Post.findById(req.params.postId)
     const imageFile = req.files.photo.path
     const image = await cloudinary.uploader.upload(
-        imageFile, 
-        { tags: `${req.params.postId}` }
-      )
+      imageFile,
+      { tags: `${req.params.postId}` }
+    )
     req.body.url = image.url
     post.morePhotos.push(req.body)
     await post.save()
@@ -35,7 +35,7 @@ async function addMorePhotos(req, res) {
     console.log(error)
     res.status(500).json(error)
   }
-}2
+} 2
 
 async function index(req, res) {
   try {
@@ -52,7 +52,7 @@ async function index(req, res) {
 async function show(req, res) {
   try {
     const post = await Post.findById(req.params.postId)
-    .populate(['author', 'comments.author'])
+      .populate(['author', 'comments.author'])
     res.status(200).json(post)
   } catch (error) {
     console.log(error)
@@ -132,7 +132,7 @@ async function createRec(req, res) {
     post.recommendations.push(req.body)
     await post.save()
 
-    const newRec = post.recommendations[post.recommendations.length -1]
+    const newRec = post.recommendations[post.recommendations.length - 1]
     const profile = await Profile.findById(req.user.profile)
     newRec.author = profile
     res.status(201).json(newRec)
@@ -193,7 +193,7 @@ async function likePost(req, res) {
 async function unlikePost(req, res) {
   try {
     const post = await Post.findById(req.params.postId)
-    post.likes.remove({_id: req.user.profile})
+    post.likes.remove({ _id: req.user.profile })
     await post.save()
     res.status(200).json(req.user.profile)
   } catch (error) {
@@ -206,8 +206,8 @@ async function savePost(req, res) {
   try {
     const post = await Post.findById(req.params.postId)
     await Profile.findByIdAndUpdate(
-      req.user.profile, 
-      { $push: { saves: post }},
+      req.user.profile,
+      { $push: { saves: post } },
       { new: true }
     )
     post.saves.push(req.user.profile)
@@ -223,17 +223,17 @@ async function unsavePost(req, res) {
   try {
     const post = await Post.findById(req.params.postId)
     const profile = await Profile.findById(req.user.profile)
-    post.saves.remove({_id: req.user.profile})
-    profile.saves.remove({_id: post._id})
+    post.saves.remove({ _id: req.user.profile })
+    profile.saves.remove({ _id: post._id })
     Promise.all([profile.save(), post.save()])
     res.status(200).json(post.saves)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
-  }
+  } a
 }
 
-async function deleteMorePhotos (req, res) {
+async function deleteMorePhotos(req, res) {
   try {
     const post = await Post.findById(req.params.postId)
     const photo = post.morePhotos.id(req.params.photoId)

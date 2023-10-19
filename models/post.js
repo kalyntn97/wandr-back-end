@@ -29,9 +29,7 @@ const recommendationSchema=new Schema({
     default:5,
     required:true
   },
-  text: {
-    type: String
-  }
+  text: {type: String}
 },{
   timestamps:true
 })
