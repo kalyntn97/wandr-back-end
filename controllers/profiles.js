@@ -151,7 +151,7 @@ async function explorePage(req, res) {
     res.status(200).json(recentPosts)
   } catch (error) {
     console.log(error)
-    res.status(500).json(err)
+    res.status(500).json(error)
   }
 }
 
