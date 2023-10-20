@@ -6,11 +6,12 @@ async function create(req, res) {
   try {
     req.body.author = req.user.profile
     const post = await Post.create(req.body)
-    await Profile.findByIdAndUpdate(
+    const profile = await Profile.findByIdAndUpdate(
       req.user.profile,
       { $push: { posts: post } },
       { new: true }
     )
+    post.author = profile
     res.status(200).json(post)
   } catch (error) {
     console.log(error)
@@ -40,7 +41,7 @@ async function addMorePhotos(req, res) {
 async function index(req, res) {
   try {
     const posts = await Post.find({})
-      .populate('author')
+      .populate({path: 'author'})
       .sort({ createdAt: 'desc' })
     res.status(200).json(posts)
   } catch (error) {
