@@ -110,7 +110,7 @@ async function updateComment(req, res) {
     const comment = post.comments.id(req.params.commentId)
     comment.text = req.body.text
     await post.save()
-    res.status(200).json(post.comments)
+    res.status(200).json(comment)
   } catch (error) {
     console.log(error)
     res.status(500).json(error)
