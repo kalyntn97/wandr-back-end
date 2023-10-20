@@ -137,6 +137,7 @@ async function explorePage(req, res) {
     const recentPosts = []
     for ( const followedUser of following) {
       const userPosts =  await Post.find({ author: followedUser._id })
+        .populate({path: 'author'})
         .sort({ createdAt: -1})
         .limit(1)
       if (userPosts.length > 0) {
