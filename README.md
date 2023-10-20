@@ -1,17 +1,19 @@
 # Wandr
+![wandr](assets/screenshot.png)
 ## Project Description :
 Wandr is a web-based application with a mission to inspire individuals to step out of their comfort zones, explore diverse cultures, landscapes, and create lasting memories. We believe that every journey has a unique story, and by sharing these stories, we aim to inspire others to embark on their own adventures. Through our platform, we provide resources, inspiration, and a community for travelers to connect, exchange ideas, and foster a sense of belonging. Together, we're making the world a more connected and inspired place.
 ## Planning Material :
-The planning materials are available on the Trello board linked [here](https://trello.com/b/CDqA4iHA/wandr), which contains the project's user stories, ERD, and wireframes.
+- The planning materials are available on the Trello board linked [here](https://trello.com/b/CDqA4iHA/wandr), which contains the project's user stories, ERD, and wireframes.
+- The pitch deck presentation linked [here](https://docs.google.com/presentation/d/1v9gJaIW6j3fMonw-iO7IPHQF37m5UycFPOrgsdDR-lY/edit?usp=sharing),which contains an overview of the project.
 ## Installation : 
-# [Wandr](http://localhost:5175/about)
+# [Wandr](https://wandr-sei.netlify.app)
 ## Front-end Github :
 # [Front-end](https://github.com/kalyntn97/wandr-front-end)
 ## Contributors :
-- [Brooklin Lee](https://github.com/brooklinlee) -Backend Developer and Scrum Manager
-- [Tran Nguyen](https://github.com/kalyntn97) - Frontend Developer and Git Commander
-- [Maria Zhuravleva](https://github.com/maria-zhuravleva)-Lead Design
-- [Muguntha Duraraj](https://github.com/Muguntha96)- Database and Models Manager
+- [Brooklin Lee](https://github.com/brooklinlee) -Backend Developer,Frontend Developer and Scrum Manager
+- [Tran Nguyen](https://github.com/kalyntn97) - Backend Developer,Frontend Developer and Git Commander
+- [Maria Zhuravleva](https://github.com/maria-zhuravleva)-Backend Developer,Frontend Developer and Lead Design
+- [Muguntha Duraraj](https://github.com/Muguntha96)- Backend Developer,Frontend Developer and Database && Models Manager
 
 ## Attrbutions :
 ![MDN](https://img.shields.io/badge/MDN%20Web%20Docs-000000.svg?style=for-the-badge&logo=MDN-Web-Docs&logoColor=white)
@@ -30,7 +32,4 @@ The planning materials are available on the Trello board linked [here](https://t
 ![Mongoose](https://img.shields.io/badge/Mongoose-880000.svg?style=for-the-badge&logo=Mongoose&logoColor=white)
 
 ## Next Steps:
-- AAU,I want to display a special icon by my name that indicates I am a top contributor on social media.
-- AAU, I want to be able to edit information in my profile.
-- As a logged-in user, I want to be able to follow friends/bloggers.
-- As a logged-in user, I want to be able to see the list of following/followers in my profile.
+- As a user, I want the application to be made mobile-responsive
