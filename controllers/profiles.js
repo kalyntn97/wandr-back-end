@@ -1,5 +1,5 @@
-import { Profile } from '../models/profile.js'
 import { User } from '../models/user.js'
+import { Profile } from '../models/profile.js'
 import { v2 as cloudinary } from 'cloudinary'
 import { Post } from '../models/post.js'
 
