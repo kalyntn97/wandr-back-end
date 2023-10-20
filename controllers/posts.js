@@ -52,7 +52,10 @@ async function index(req, res) {
 async function show(req, res) {
   try {
     const post = await Post.findById(req.params.postId)
-      .populate(['author', 'comments.author'])
+    .populate([
+      {path: 'author'},
+      {path: 'comments.author'}
+    ])
     res.status(200).json(post)
   } catch (error) {
     console.log(error)
@@ -103,6 +106,7 @@ async function createComment(req, res) {
 async function updateComment(req, res) {
   try {
     const post = await Post.findById(req.params.postId)
+    .populate({path: 'comments.author'})
     const comment = post.comments.id(req.params.commentId)
     comment.text = req.body.text
     await post.save()
