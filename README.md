@@ -15,9 +15,6 @@ Wandr is a web-based application with a mission to inspire individuals to step o
 - [Maria Zhuravleva](https://github.com/maria-zhuravleva)-Backend Developer,Frontend Developer and Lead Design
 - [Muguntha Duraraj](https://github.com/Muguntha96)- Backend Developer,Frontend Developer and Database && Models Manager
 
-## Attrbutions :
-![MDN](https://img.shields.io/badge/MDN%20Web%20Docs-000000.svg?style=for-the-badge&logo=MDN-Web-Docs&logoColor=white)
-
 ## Tools and Technologies :
 ![Git](https://img.shields.io/badge/Git-F05032.svg?style=for-the-badge&logo=Git&logoColor=white)
 ![GitHub](https://img.shields.io/badge/GitHub-181717.svg?style=for-the-badge&logo=GitHub&logoColor=white)
